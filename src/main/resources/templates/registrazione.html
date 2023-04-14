@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js%22%3E"></script>
+  <link href="registrazione.css" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+<link href="https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy&display=swap" rel="stylesheet">
+	<title>Form di Registrazione</title>
+	
+</head>
+<body>
+    <div class="container">
+        
+    <img src="logo2.png" alt ="logobig" class="logo">
+    <div class="social">
+        <div id="insta"><img src="instagram.png"></div>
+        <div id="face"><img src="facebook.png"></div>
+        <div id="tik"><img src="tiktok.png"></div>
+    </div>
+
+    
+    <div id="dropdown">
+        <a th:href="@{/homepage}" th:text="'Home Page'"></a>
+        <a th:href="@{/area_utente}">Area riservata</a>
+        <a th:href="@{#}">Galleria</a>
+        <a th:href="prenotazione.html">Prenotazione</a>
+        <a th:href="@{/area_riservata}">Area admin</a>
+      
+      </div>
+        
+        <div class="contenuto">
+
+            <form action="registrazione" method="post" th:object="${anagrafica}" enctype="multipart/form-data">
+                <label for="name" th:text="'Nome: '"></label>
+                <input class="form-control" type="text" th:field="*{nome}" id="nome" name="nome" required="required">
+                <label for="name">Cognome:</label>
+                <input class="form-control" type="text" th:field="*{cognome}" id="cognome" name="cognome" required="required">
+                <label for="data">Data di nascita</label>
+                <input type="date" th:field="*{data_di_nascita}" name="Data" required="required" >
+                <label for="email">Email:</label>
+                <input type="email" th:field="*{email}" id="email" name="email" required="required" >
+                
+                <label for="name">Username:</label>
+                <input type="text" th:value="${profilo.username}" id="name" name="username" required="required" >
+
+                <label for="password">Password:</label>
+                <input type="password" th:value="${profilo.password}" id="password" name="password" required="required" >
+
+                <br>
+
+                <input type="submit" value="Registrati">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

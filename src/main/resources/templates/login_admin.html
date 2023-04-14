@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title th:text="'Login Form'"></title>
+	</head>
+	<body>
+		<form action="admin_login" method="post">
+			<input type="text" name="username" required>
+			<br>
+			<input type="password" name="password" required>
+			<br>
+			<input type="submit" th:value="'Accedi'">
+		</form>
+		<div th:if="${logError}" style="background-color:red">
+			<p th:text="'Credenziali Errate!! ACCESSO NEGATO'"></p>
+		</div>
+	</body>
+</html>
