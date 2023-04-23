@@ -1,17 +1,13 @@
 package it.corso.model;
 
-import java.util.List;
-import java.util.ArrayList;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity // trasforma la classe cliente nell'Entity cliente , permettendo di essere mappata nella tabella 
@@ -33,16 +29,7 @@ public class Tatuaggio
 	@JoinColumn(name = "id_categoria", referencedColumnName = "id")
 	
 	private Categoria categoria;
-	
-	@OneToMany(
-			mappedBy = "tatuaggio",
-			cascade = CascadeType.REFRESH,
-			fetch = FetchType.EAGER,
-			orphanRemoval = true
-			)
-	private List<Prenotazione> prenotazione = new ArrayList<>();
-	
-	
+
 	@Column(name = "prezzo")
 	private double prezzo;
 	
@@ -64,23 +51,18 @@ public class Tatuaggio
 	public void setImmagine(String immagine) {
 		this.immagine = immagine;
 	}
-	public List<Prenotazione> getPrenotazione() {
-		return prenotazione;
-	}
-	public void setPrenotazione(List<Prenotazione> prenotazione) {
-		this.prenotazione = prenotazione;
-	}
-	public Categoria getCategoria() {
-		return categoria;
-	}
-	public void setPrenotazione(Categoria categoria) {
-		this.categoria = categoria;
-	}
+
 	public double getPrezzo() {
 		return prezzo;
 	}
 	public void setPrezzo(double prezzo) {
 		this.prezzo = prezzo;
+	}
+	public Categoria getCategoria() {
+		return categoria;
+	}
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 	
 }
