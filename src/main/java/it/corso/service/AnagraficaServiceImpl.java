@@ -3,11 +3,9 @@ package it.corso.service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import it.corso.dao.AnagraficaDao;
 import it.corso.model.Admin;
 import it.corso.model.Anagrafica;
-import it.corso.model.Profilo;
 import jakarta.servlet.http.HttpSession;
 
 @Service
@@ -24,7 +22,7 @@ public class AnagraficaServiceImpl implements AnagraficaService {
 	}
 
 	@Override
-	public Anagrafica getAnagraficaByID(int id) {
+	public Anagrafica getAnagraficaById(int id) {
 		
 		 return anagraficaDao.findById(id).get();
 	}
@@ -43,25 +41,16 @@ public class AnagraficaServiceImpl implements AnagraficaService {
 	}
 	
 	@Override
-	public boolean loginUtente(List<Profilo> profili,String username, String password, HttpSession session)
+	public boolean loginUtente(String username, String password, HttpSession session)
 	{
-		//costanti per il confronto
-		for (Profilo profilo : profili) {
-			final String USERNAME_REGISTRATO = profilo.getUsername();
-			final String PASSWORD_REGISTRATA = profilo.getPassword();
-			//controllo login
-			if(username.equalsIgnoreCase(USERNAME_REGISTRATO) && password.equals(PASSWORD_REGISTRATA))
-			{
-				Profilo utente = new Profilo();
-				utente.setUsername(USERNAME_REGISTRATO);
-				utente.setPassword(PASSWORD_REGISTRATA);
-				//salvo l'utente in sessione
-				session.setAttribute("utente", utente);
-				return true;
-			}
+		Anagrafica anagrafica = anagraficaDao.findByProfiloUsernameAndProfiloPassword(username, password); // riceve username e pass dal form
+		if (anagrafica == null) {
+			return false;
 		}
-		
-		//login fallito
+		if(username.equalsIgnoreCase(anagrafica.getProfilo().getUsername()) && password.equalsIgnoreCase(anagrafica.getProfilo().getPassword())) {		
+			session.setAttribute("profilo", anagrafica);
+			return true;
+		}
 		return false;
 	}
 	
@@ -84,12 +73,5 @@ public class AnagraficaServiceImpl implements AnagraficaService {
 		//login fallito
 		return false;
 	}
-	
-	@Override
-	public String logout(HttpSession session) {
-        session.removeAttribute("admin");
-        session.invalidate();
-        return "redirect:/admin_login";
-    }
 
 }
