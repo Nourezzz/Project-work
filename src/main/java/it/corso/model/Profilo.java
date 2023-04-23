@@ -1,14 +1,14 @@
 package it.corso.model;
 
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
+
+
+
 
 @Entity // trasforma la classe cliente nell'Entity cliente , permettendo di essere mappata nella tabella 
 @Table(name = "profili") // collega l'omonima tabella nel Db a questa classe 
@@ -25,9 +25,7 @@ public class Profilo
 	@Column(name = "password")
 	private String password;
 	
-	@Transient
-	private List<Profilo> profili;
-	
+
 	//getter e setter 
 	public int getId() {
 		return id;
@@ -46,12 +44,6 @@ public class Profilo
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public List<Profilo> getProfili() {
-		return profili;
-	}
-	public void setProfili(List<Profilo> profili) {
-		this.profili = profili;
 	}
 	
 }
