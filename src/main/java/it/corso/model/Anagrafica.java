@@ -1,7 +1,7 @@
 package it.corso.model;
+
 import java.util.ArrayList;
 import java.util.List;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -53,6 +53,7 @@ public class Anagrafica
 	)
 	private List<Prenotazione> prenotazioni = new ArrayList<>();
 	
+	
 	//getter e setter 
 	public int getId() {
 		return id;
@@ -96,6 +97,6 @@ public class Anagrafica
 	public void setPrenotazioni(List<Prenotazione> prenotazioni) {
 		this.prenotazioni = prenotazioni;
 	}
-	
+
 	
 }
