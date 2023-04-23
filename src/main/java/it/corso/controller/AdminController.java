@@ -24,12 +24,15 @@ public class AdminController {
 			Model model,
 			HttpSession session)
 	{
+		if(session.getAttribute("profilo") != null || session.getAttribute("admin") != null) 
+			session.invalidate();
 		//se l'utente è loggato lo indirizzo ad area riservata
-		if(session.getAttribute("admin") != null)
-			return "redirect:/pagina_riservata";
+		else if(session.getAttribute("admin") != null)
+				return "redirect:/pagina_riservata";
 		//altrimenti gli faccio vedere il form
-		model.addAttribute("logError", logError != null); //true oppure false
-		return "login_admin";
+			model.addAttribute("logError", logError != null); //true oppure false
+			return "login_admin";
+		
 	}
 	
 	@PostMapping
@@ -41,6 +44,6 @@ public class AdminController {
 		if(!anagraficaService.loginAdmin(username, password, session))
 			return "redirect:/admin_login?le";
 		return "redirect:/pagina_riservata";
-	}
+	}	
 	
 }
