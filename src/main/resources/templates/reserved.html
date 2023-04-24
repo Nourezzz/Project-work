@@ -1,40 +1,245 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="UTF-8">
-		<title th:text="'Area Riservata - ' + ${admin.username}"></title>
-		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	</head>
-	<body>
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<div class="container">
-				<a class="navbar-brand" href="#">Il Nostro Sito</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav">
-						<li class="nav-item active">
-							<a class="nav-link" th:href="@{/homepage}" th:text="'Home'"></a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" th:href="@{/prodotti}" th:text="'Prodotti'"></a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" th:href="@{/contatti}" th:text="'Contatti'"></a>
-						</li>
-					</ul>
+<head>
+	<title>Area Admin</title>
+  <meta charset="UTF-8">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="CSS/reserved.css" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+<link href="https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy&display=swap" rel="stylesheet">
+</head>
+ 
+<body style="background-color: rgb(211, 208, 208);">
+<img th:href="@{homepage}" src="images/logo2.png" alt ="logobig" class="logo2">
+    <div class="container">
+        
+       		 <div col-4 id="dropdown">
+				<form action="pagina_riservata/logout" method="get">
+					<input class="bottone1" type="submit" value="Logout" />
+				</form>
+          
+          	</div>
+    <div col-8 class="bottone">
+		<div><h1 style=color:#024e15;>Benvenuto nell'area admin<br></h1></div>
+  
+    <div><button id="btn-gestione-clienti">Gestione utenti</button></div>
+  
+  </div>
+  <div class="dialog" id="dialog-gestione-clienti" style="height: 500px; overflow: auto;">
+    <h2>Gestione clienti</h2>
+    
+    <table class="table table-striped table-responsive">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Cognome</th>
+          <th>Data di nascita</th>
+          <th>Username</th>
+          <th>Email</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="a : ${clienti}">
+								<td th:text="${a.nome}"></td>
+								<td th:text="${a.cognome}"></td>
+								<td th:text="${a.data_di_nascita}"></td>
+								
+								<td th:text="${a.email}"></td>
+								<td class="text-end">
+										<a th:href="@{pagina_riservata/cancella_anagrafica(id=${a.id})}" 
+										class="btn btn-danger btn-sm" th:text="'Elimina'"></a>
+								</td>
+							</tr>							
+      </tbody>
+    </table>
+    <button class="dialog-close">Chiudi</button>
+    
+  </div>
+  <div th:if="${logErrorT}" style="color:red">
+			<p style="text-align:center; font-size:20px" th:text="'Dimensione immagine caricata superiore a 1MB, tatuaggio non registrato!'"></p>
+		</div><div th:if="${logErrorC}" style="color:red">
+			<p style="text-align:center; font-size:20px" th:text="'Errore nella registrazione: la categoria non è stata selezionata'"></p>
+		</div>
+  <div  id="dialog-gestione-prenotazione" >
+    <h2>Gestione prenotazione</h2>
+    <h4>Catalogo prenotazioni</h4>
+    <div class="prenotazione" style="height: 300px;  width: 1000px; overflow: auto;">
+    <table class="table table-striped table-responsive">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Cognome</th>
+          <th>Data di nascita</th>
+          <th>Email</th>
+          <th>Data prenotazione</th>
+          <th>Ora prenotazione</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="p : ${prenotazioni}">
+								<td th:text="${p.anagrafica.nome}"></td>
+								<td th:text="${p.anagrafica.cognome}"></td>
+								<td th:text="${p.anagrafica.data_di_nascita}"></td>
+								<td th:text="${p.anagrafica.email}"></td>
+								<td th:text="${p.data}"></td>
+								<td th:text="${p.ora}"></td>
+								<td class="text-end">
+										<a  th:href="@{/pagina_riservata(id=${p.id})}" id="btn-modifica"
+											class="btn btn-danger btn-sm" th:text="'Modifica'"></a>
+										<a th:href="@{pagina_riservata/cancella_prenotazione(id=${p.id})}" 
+											class="btn btn-danger btn-sm" th:text="'Elimina'"></a>
+								</td>
+							</tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="modifica">
+      <h4 th:text="'Modifica prenotazione'"></h4>
+    <form action="pagina_riservata/registra_prenotazione" method="post" class="modificaPrenotazione">
+      <label for="categoria" th:text="'Modifica data prenotazione:'"></label>
+    	<input th:each="p : ${prenotazione}" name="data" type="date" th:value="${p.data}">
+      <label for="categoria" th:text="'Modifica ora prenotazione:'"></label>
+    	<input th:each="p : ${prenotazione}" name="ora" type="time" th:value="${p.ora}">
+    	<input type="submit" value="Conferma">
+    </form>
+    </div>
+  </div> 
+  <div th:if="${logError}" style="color:red">
+			<p th:text="'Nessuna prenotazione selezionata.'"></p>
+		</div>
+  
+  
+ 
+    
+
+  <div class="galleria" id="dialog-gestione-galleria">
+    <h2>Gestione galleria</h2>
+
+    
+    <div class="container-fluid">
+			<div class="row mt-4">
+				<div class="col-12 text-center">
+					<h4 th:text="'Registrazione Tatuaggio'"></h4>
 				</div>
 			</div>
-		</nav>
-		<div class="container mt-5">
-				<h1 th:text="'Benvenuto in area riservata, ' + ${admin.username}"></h1>
-				<a th:href="@{logout}" class="btn btn-secondary">Logout</a>
+			<div class="row justify-content-center mt-4">
+				<div class="col-4">
+					<form action="pagina_riservata/registra_tatuaggio" method="post" enctype="multipart/form-data">
+						<div class="row">
+							<div class="col-12">
+								<label for="descrizione" th:text="'Titolo:'"></label>
+								<input th:each="t : ${tatuaggio}" th:value="${t.descrizione}" type="text" id="descrizione" name="descrizione" class="form-control" required="required">
+							</div>
+              <div class="col-12">
+								<label for="prezzo" th:text="'Prezzo:'"></label>
+								<input th:each="t : ${tatuaggio}" th:value="${t.prezzo}" type="number" step="any" id="prezzo" name="prezzo" class="form-control" required="required">
+							</div>
+							<div   class="col-12">
+							<label for="categoria" th:text="'Categoria:'"></label>
+							<select id="categoria" name="id" class="form-select">
+							<option th:value="${leC}" th:selected="selected" th:text="'Scegli la Categoria'"></option>
+                    <option th:each="c : ${categorie}" th:value="${c.id}" th:text="${c.descrizione}"></option>
+                                       
+                </select>
+                </div>
+						</div>
+						<div class="row mt-2">
+							<div class="col-12">
+								<label th:each="t : ${tatuaggio}" th:if="${t.immagine == null}" for="immagine" th:text="'Immagine Tatuaggio (max 1MB):'"></label>
+								<input required="required" th:each="t : ${tatuaggio}" th:value="${t.immagine}" th:if="${t.immagine == null}" type="file" id="immagine" name="immagine" class="form-control">
+							</div>
+						</div>
+						<div class="row mt-4">
+							<div class="col-12 text-center">
+                
+								<input type="submit" value="Registra tatuaggio" class="btn btn-primary">
+								&emsp;
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
-		<!-- Bootstrap JS -->
-		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	</body>
+    <div class="row mt-4">
+      <div class="catalogo col-12">
+        <h4>Catalogo Tatuaggi</h4>
+        <div style="height: 300px; width: 1000px; overflow: auto;" >
+    <table class="table table-striped table-responsive">
+      <thead>
+        <tr>
+          <th>Immagine</th>
+          <th>Descrizione</th>
+          <th>Prezzo</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="t : ${tatuaggi}">
+           <td><img th:src="${t.immagine}"></td>
+          <td th:text="${t.descrizione}"></td>
+          <td th:text="${t.prezzo}"></td>
+          <td><a th:href="@{pagina_riservata/cancella_tatuaggio(idT=${t.id})}" class="btn btn-danger btn-sm" >Cancella</a></td>
+          <td><a th:href="@{/pagina_riservata(idT=${t.id})}" class="btn btn-danger btn-sm" >Modifica</a></td>
+        </tr>
+<!--         <tr> -->
+<!--           <td ><img src="img2.jpg"></td> -->
+<!--           <td >njkgnkjdf</td> -->
+<!--           <td > 190.00 Euro</td> -->
+<!--           <td><a th:href="@{pagina_riservata/cancella_tatuaggio}" class="btn btn-danger btn-sm" >Cancella</a></td> -->
+<!--           <td><a th:href="@{pagina_riservata/registra_tatuaggio}" class="btn btn-danger btn-sm" >Modifica</a></td> -->
+<!--         </tr> -->
+<!--         <tr> -->
+<!--           <td ><img src="img7.jpg"></td> -->
+<!--           <td >njkgnkjdf</td> -->
+<!--           <td > 190.00 Euro</td> -->
+<!--           <td><a th:href="@{pagina_riservata/cancella_tatuaggio}" class="btn btn-danger btn-sm" >Cancella</a></td> -->
+<!--           <td><a th:href="@{pagina_riservata/registra_tatuaggio}" class="btn btn-danger btn-sm" >Modifica</a></td> -->
+<!--         </tr> -->
+<!--         <tr> -->
+<!--           <td ><img src="img8.jpg"></td> -->
+<!--           <td >njkgnkjdf</td> -->
+<!--           <td > 190.00 Euro</td> -->
+<!--           <td><a th:href="@{pagina_riservata/cancella_tatuaggio}" class="btn btn-danger btn-sm" >Cancella</a></td> -->
+<!--           <td><a th:href="@{pagina_riservata/registra_tatuaggio}" class="btn btn-danger btn-sm" >Modifica</a></td> -->
+<!--         </tr> -->
+      </tbody>
+    </table>
+  </div>
+  </div>
+    </div>
+    
+  </div>
+  
+  
+  <script>
+    // Seleziona il pulsante "Gestione clienti"
+    const btnGestioneClienti = document.getElementById('btn-gestione-clienti');
+    
+    // Seleziona la finestra di dialogo "Gestione clienti"
+    const dialogGestioneClienti = document.getElementById('dialog-gestione-clienti');
+    
+    // Seleziona il pulsante "Chiudi"
+    const btnClose = dialogGestioneClienti.querySelector('.dialog-close');
+    
+    // Aggiungi un gestore di eventi al pulsante "Gestione clienti"
+    btnGestioneClienti.addEventListener('click', () => {
+      // Mostra la finestra di dialogo
+      dialogGestioneClienti.style.display = 'block';
+      dialogGestioneGalleria.style.display = 'none';
+      dialogGestionePrenotazione.style.display = 'none';
+    });
+    
+    // Aggiungi un gestore di eventi al pulsante "Chiudi"
+    btnClose.addEventListener('click', () => {
+      // Nascondi la finestra di dialogo
+      dialogGestioneClienti.style.display = 'none';
+    });
+
+	</script>
+</body>
 </html>
+
+	
