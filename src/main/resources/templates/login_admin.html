@@ -1,19 +1,79 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="UTF-8">
-		<title th:text="'Login Form'"></title>
-	</head>
-	<body>
-		<form action="admin_login" method="post">
-			<input type="text" name="username" required>
-			<br>
-			<input type="password" name="password" required>
-			<br>
-			<input type="submit" th:value="'Accedi'">
-		</form>
-		<div th:if="${logError}" style="background-color:red">
-			<p th:text="'Credenziali Errate!! ACCESSO NEGATO'"></p>
-		</div>
-	</body>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="CSS/login_admin.css" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+<link href="https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy&display=swap" rel="stylesheet">
+	<title>Form di Registrazione</title>
+	
+</head>
+<body background="images/prova.jpg">
+<header><nav class="navbar navbar-expand-md fixed-top navbar-light bg-white">
+       
+  
+  <a class="navbar-brand" th:href="@{/homepage}">
+   
+<img class="logo2" src="images/logo2.png">
+  </a>
+
+  <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon">
+    </span>
+
+    <!-- <span class="line line-1"></span>
+    <span class="line line-2"></span>
+    <span class="line line-3"></span> -->
+  </button>
+
+<div class="container">
+
+  <div class="collapse navbar-collapse" id="navbarMenu">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" style="color:#000000" th:href="@{/homepage}">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"  style="color:black" th:href="@{/galleria}">Galleria</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"  style="color:black" th:href="@{/prenotazione}">Prenota</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"  style="color:#000000" th:href="@{/utente_reserved}"><img class="login" src="images/login.png">Accedi/Registrati</a>
+      </li>
+    
+    </ul>
+  </div>
+</div>
+
+
+</div>
+</nav></header>
+    <div class="container">
+       
+        
+        <div class="contenuto">
+            
+             <form action="admin_login" method="post">
+               <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                
+
+                <input id = "bottone" type="submit" value="Login"/>
+                <br>
+                <div th:if="${logError}" style="color:red">
+					<p th:text="'Credenziali Errate!! ACCESSO NEGATO'"></p>
+				</div>
+            </form>
+        </div>
+    </div>
+    
+</body>
 </html>
