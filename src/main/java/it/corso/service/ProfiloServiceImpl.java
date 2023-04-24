@@ -35,5 +35,5 @@ public class ProfiloServiceImpl implements ProfiloService {
 		
 		profiloDao.delete(profilo);
 	}
-
+	
 }
