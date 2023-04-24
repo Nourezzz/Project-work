@@ -10,4 +10,5 @@ public interface ProfiloService {
 	Profilo getProfiloById(int id);
 	List<Profilo> getProfilo();
 	void cancellaProfilo(Profilo profilo);
+	
 }
