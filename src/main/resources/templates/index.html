@@ -1,11 +1,224 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="UTF-8">
-		<title th:text="'Home Page'"></title>
-	</head>
-	<body>
-		<h1 th:text="'Sei in area free'"></h1>
-		<a th:href="@{admin_login}" th:text="'Accedi ad area riservata'"></a>
-	</body>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap-5.2.3-dist/css/bootstrap.css" />    
+    <link rel="stylesheet" href="CSS/miocss.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+<link href="https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy&display=swap" rel="stylesheet">
+<script src="vendor/bootstrap-5.0.0-beta2-dist/js/bootstrap.bundle.min.js"></script>
+
+    <title>Document</title>
+</head>
+
+<body>
+
+<header><nav class="navbar navbar-expand-md fixed-top navbar-light bg-white">
+       
+  
+  <a class="navbar-brand" th:href="@{/homepage}">
+   
+<img class="logo2" src="images/logo2.png">
+  </a>
+
+  <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon">
+    </span>
+
+    
+  </button>
+
+<div class="container">
+
+  <div class="collapse navbar-collapse" id="navbarMenu">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" style="color:#000000" th:href="@{/homepage}">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"  style="color:black" th:href="@{/galleria}">Galleria</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"  style="color:black" th:href="@{/prenotazione}">Prenota</a>
+      </li>
+      <li th:if="${profilo != null}" class="nav-item">
+        <a class="nav-link"  style="color:#000000" th:href="@{/utente_reserved}"><img th:text="${profilo.nome + ' ' + profilo.cognome}" class="login" src="images/login.png"></a>
+      </li>
+      <li th:if="${profilo == null}" class="nav-item">
+        <a class="nav-link"  style="color:#000000" th:href="@{/utente_reserved}"><img th:text="'Accedi/Registrati'" class="login" src="images/login.png"></a>
+      </li>
+      
+    
+    <li class="nav-item">
+      <a th:if="${profilo == null}" class="nav-link"  style="color:#000000" th:href="@{/pagina_riservata}"><img th:text="'Area Admin'" class="login" src="images/admin.png"></a>
+    </li>
+    <li th:if="${profilo != null}" class="nav-item">
+        <a class="nav-link" style="color:#000000" th:href="@{pagina_riservata/logout}"><button th:text="'Logout'" type="button" class="bottone"></button></a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+</div>
+</nav></header>
+      
+
+            <div class="col-lg-12">
+                <img src="images/sfondo.jpg" alt="sfondo" class="sfondo"> 
+            </div>
+
+         
+          <div class="col-lg-12">
+          <div class="Titolo"><p><h1><br>
+            TATTOO ARTIST</h1></p></div>
+          </div>
+            
+
+
+              <div class="row justify-content-center"> 
+              
+                  <div class="col-lg-3">
+                    <div class="card">
+                      <!-- class che carica un immagine in cima a una card, già ottimizzata-->
+                      <img class="card-img-top" src="images/art1.jpg"/>
+                      <div class="card-body">
+                          <h4 class="card-title">Luca Mezzanotte</h4>
+                          <p class="card-text">Un esperto dello stile realisto, sarà in grado di realizzare la vostra realtà sulla vostra pelle.</p>
+                      </div>
+                    </div>
+                 </div>
+      
+                 <div class="col-lg-3">
+                  <div class="card">
+                    <!-- class che carica un immagine in cima a una card, già ottimizzata-->
+                    <img class="card-img-top" src="images/art2.jpg"/>
+                    <div class="card-body">
+                        <h4 class="card-title">Jacopo Spina</h4>
+                        <p class="card-text">Un mago della creatività, vi farà tornare bambini con il suo stile cartoon e Old school.</p>
+                    </div>
+                  </div>
+               </div>
+      
+               <div class="col-lg-3">
+                  <div class="card">
+                    <!-- class che carica un immagine in cima a una card, già ottimizzata-->
+                    <img class="card-img-top" src="images/art3.jpg"/>
+                    <div class="card-body">
+                        <h4 class="card-title">Elena Rubini</h4>
+                        <p class="card-text">La regina di Concrete Jungle, esperta nello stile giapponese e cartoon/anime.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+           
+                
+     
+
+            <div class="col-lg-12">
+                <p><h1>SCEGLI IL TUO STILE</h1></p>
+                </div>
+
+                <div id="demo" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <a th:href="@{/galleria}"><img src="images/t11.jpg" class="d-block" style="width:100%;height:auto"></a>
+                    </div>
+                  <div class="carousel-item">
+                    <a th:href="@{/galleria}"><img src="images/t22.jpg" class="d-block" style="width:100%;height:auto"></a>
+                  </div>
+                  <div class="carousel-item">
+                    <a th:href="@{/galleria}"><img src="images/t33.jpg" class="d-block" style="width:100%;height:auto"></a>
+                  </div>
+                  <div class="carousel-item">
+                    <a th:href="@{/galleria}"><img src="images/t44.jpg" class="d-block" style="width:100%;height:auto"></a>
+                  </div>
+                </div>
+                  </div>
+
+
+<script>
+ window.onload = function(){
+        var slides = document.getElementsByClassName('carousel-item'),
+            addActive = function(slide) {slide.classList.add('active')},
+            removeActive = function(slide) {slide.classList.remove('active')};
+        addActive(slides[0]);
+        
+        setInterval(function (){
+          for (var i = 0; i < slides.length; i++){
+            if (i + 1 == slides.length) {
+              addActive(slides[0]);
+              slides[0].style.zIndex = 100;
+              setTimeout(removeActive, 350, slides[i]); 
+              break;
+            }
+            if (slides[i].classList.contains('active')) { 
+              slides[i].removeAttribute('style');
+              setTimeout(removeActive, 350, slides[i]);
+              addActive(slides[i + 1]);
+              break;
+            }
+          } 
+        }, 4000);
+      }
+</script>
+
+
+
+              <div class="col-lg-6">
+                <p><h1>CHI SIAMO</h1></p>
+                </div>
+
+          <div class="row">
+          <div class="col-lg-1">
+</div>
+            <div class="col-lg-5">
+              <p>Concrete Jungle è una piccola bottega dove l'arte del tatuaggio fa da padrona su fondamenta di colori e interpretazione illustrativa derivanti dal mondo del Cartoon, New school, Realistico e quello giapponese.
+                Lo studio si presenta accogliente e luminoso, sicuramente atipico nell'arredo rispetto al classico tattoo studio.
+                Pulizia, cordialità e professionalità fanno del Concrete Jungle Tattoo un luogo piacevole e interessante.</p>
+            </div>
+            <div class="col-lg-6">
+                <img src="images/studio.jpg" alt="studio" class="studio"> 
+            </div>
+          </div>
+
+
+          <div class="col-lg-6">
+                <p><h1>DOVE SIAMO</h1></p>
+                </div>
+
+        <div class="col-12">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d24728.0129110573!2d12.62476758972945!3d41.99839923756389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132f7ab257edb06f%3A0x3ff2e5def86a7ea2!2sVia%20Nomentana%2C%20431%2C%2000013%20Tor%20Lupara%20RM!5e0!3m2!1sit!2sit!4v1681726763467!5m2!1sit!2sit"  style="border:0;" width="100%;" height="450px;" loading="lazy"  allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+                
+
+      <footer> 
+        <div class=”footer-content”>
+              </div>
+              <h3>Concrete Jungle-Tattoo studio</h3>
+              <p>Via Nomentana, 431, 00013 Fonte Nuova RM</br> 
+              </br> 
+                Orari:</br>
+                LUN 10:30-19:30,
+                MAR 10:30-19:30,</br>
+                MER 10:30-19:30,
+                GIO 10:30-19:30,</br>
+                VEN 10:30-19:30,
+                SAB 10:30-19:30,</br>
+                DOM chiusi</br></p>
+
+
+             <div class=”footer-bottom”>
+             
+           </div>
+
+           <p>copyright &copy;2023, tel: 06 8776 4036, email: concretejungle@gmail.com  </p>
+
+         
+          </footer>
+
+</body>
 </html>
